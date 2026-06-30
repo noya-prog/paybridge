@@ -27,6 +27,12 @@ public class Merchant {
     @Column (nullable = false, unique = true)
     private String email;
 
+    @Column (nullable = false)
+    private String password;
+
+    @Column (nullable = false, unique = true, length = 20)
+    private String merchantCode;
+
     @Column(nullable = false, unique = true)
     private String apiKey;
 

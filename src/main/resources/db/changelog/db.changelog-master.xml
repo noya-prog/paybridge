@@ -6,5 +6,6 @@
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
 
     <include file="db/changelog/migrations/V1__create_initial_schema.sql"/>
+    <include file="db/changelog/migrations/V2__add_password_and_merchant_code.sql"/>
 
 </databaseChangeLog>
