@@ -42,7 +42,7 @@ public class MerchantService {
 
         String apiKey = jwtTokenProvider.generateApiKey();
         String hashedPassword = passwordEncoder.encode(request.getPassword());
-        String merchantCode = generateUniqueMerchantCode();
+        String merchantCode = generateUniqueMerchantCode(request.getName());
 
         Merchant merchant = Merchant.builder()
                 .name(request.getName())
@@ -152,10 +152,17 @@ public class MerchantService {
      * Generate a unique human-readable merchant code, e.g. MCH-7F3A2B
      * Retries on the rare collision.
      */
-    private String generateUniqueMerchantCode() {
+    private String generateUniqueMerchantCode(String name) {
+        // Take first 3 letters of name, uppercase, letters only
+        String prefix = name.toUpperCase()
+                .replaceAll("[^A-Z]", "") // remove non-letters
+                .substring(0, Math.min(3, name.replaceAll("[^a-zA-Z]", "").length()));
+        while (prefix.length() < 3){
+            prefix += "X";
+        }
         String code;
         do {
-            code = "MCH-" + randomCodeSuffix(6);
+            code = "MCH-" + prefix + "-" + randomCodeSuffix(4);
         } while (merchantRepository.existsByMerchantCode(code));
         return code;
     }
