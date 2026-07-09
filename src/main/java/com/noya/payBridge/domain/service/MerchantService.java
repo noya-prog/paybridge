@@ -175,7 +175,7 @@ public class MerchantService {
         return sb.toString();
     }
 
-    private MerchantResponse mapToResponse(Merchant merchant) {
+    private MerchantResponse    mapToResponse(Merchant merchant) {
         return MerchantResponse.builder()
                 .id(merchant.getId())
                 .name(merchant.getName())
