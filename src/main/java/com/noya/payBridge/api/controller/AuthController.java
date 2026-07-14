@@ -40,16 +40,16 @@ public class AuthController {
     }
 
 //    Get current merchant profile
-    @GetMapping("/get")
-    public ResponseEntity<MerchantResponse> getCurrentMerchant(Authentication authentication){
-        UUID merchantId = (UUID) authentication.getDetails();
-        MerchantResponse response = merchantService.getMerchantById(merchantId);
-        return ResponseEntity.ok(response);
-    }
+    @GetMapping("/me")
+    public ResponseEntity<MerchantResponse> getCurrentMerchant(Authentication authentication) {
+    UUID merchantId = (UUID) authentication.getPrincipal();
+    MerchantResponse response = merchantService.getMerchantById(merchantId);
+    return ResponseEntity.ok(response);
+}
 //    Regenerate API key for current merchant
     @PostMapping("/regenerate-api-key")
     public ResponseEntity<String> regenerateApiKey(Authentication authentication){
-        UUID merchantId = (UUID) authentication.getDetails();
+        UUID merchantId = (UUID) authentication.getPrincipal();
         String newApiKey = merchantService.regenerateApiKey(merchantId);
         return ResponseEntity.ok(newApiKey);
     }
